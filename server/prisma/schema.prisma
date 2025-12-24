@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              BigInt   @id
+  username        String?
+  firstName       String
+  languageCode    String?
+  createdAt       DateTime @default(now())
+  streaksStarted  Streak[] @relation("User1")
+  streaksJoined   Streak[] @relation("User2")
+}
+
+model Streak {
+  id             Int      @id @default(autoincrement())
+  user1Id        BigInt
+  user2Id        BigInt
+  groupId        BigInt?
+  lastActivity1  DateTime @default(now())
+  lastActivity2  DateTime @default(now())
+  petName        String?  @default("Дракоша")
+  dailyMsgs1     Int      @default(0)
+  dailyMsgs2     Int      @default(0)
+  freezesAvailable Int    @default(0)
+  count          Int      @default(1)
+  lastCheckIn    DateTime @default(now())
+  isFrozen       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  user1          User     @relation("User1", fields: [user1Id], references: [id])
+  user2          User     @relation("User2", fields: [user2Id], references: [id])
+
+  @@unique([user1Id, user2Id])
+}
