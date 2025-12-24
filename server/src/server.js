@@ -166,8 +166,7 @@ app.post("/api/use-freeze", async (req, res) => {
 const clientPath = path.join(__dirname, '../../client/dist');
 app.use(express.static(clientPath));
 
-// Все остальные запросы отправляем на индексную страницу React
-app.get('(.*)', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
 });
 
