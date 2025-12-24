@@ -167,7 +167,7 @@ const clientPath = path.join(__dirname, '../../client/dist');
 app.use(express.static(clientPath));
 
 // Все остальные запросы отправляем на индексную страницу React
-app.get('/*', (req, res) => {
+app.get('(.*)', (req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
 });
 
