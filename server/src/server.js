@@ -3,6 +3,7 @@ const cors = require("cors");
 const prisma = require("./db");
 const crypto = require('crypto');
 const app = express();
+const path = require('path');
 
 require('./bot');
 
